@@ -1,12 +1,12 @@
 package com.kafka.consumer;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import kafka.consumer.Consumer;
 import kafka.consumer.ConsumerConfig;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -37,10 +37,10 @@ public class KafkaMTHLConsumer {
     }
 
     public void consumeData(int threadCount) {
-        Map<String, Integer> topicCount = new HashMap<>();
-        topicCount.put(topic, threadCount);
+        //Map<String, Integer> topicCount = new HashMap<>();
+        //topicCount.put(topic, threadCount);
 
-        Map<String, List<KafkaStream<byte[], byte[]>>> consumerStreams = consumer.createMessageStreams(topicCount);
+        Map<String, List<KafkaStream<byte[], byte[]>>> consumerStreams = consumer.createMessageStreams(ImmutableMap.of(topic,threadCount));
         List<KafkaStream<byte[], byte[]>> streams = consumerStreams.get(topic);
 
         //we can use cachedthreadpool and threadCount not req.
